@@ -27,14 +27,31 @@ struct GfxInfo	//Graphical info common for all shapes (you may add more members)
 
 class GUI
 {
+	enum GUI_MODE	
+	{
+		MODE_DRAW,	
+		MODE_PLAY	
+	};
+
+
 	enum MenuIcon //The icons of the menu (you should add more icons)
 	{
 		//Note: Icons are ordered here as they appear in menu
 		//If you want to change the menu icons order, change the order here
+		ICON_GAME,
 		ICON_RECT,		//Recangle icon in menu
 		ICON_TRI,		//Triangle icon in menu
-
+		ICON_CIR,
+		ICON_SQE,
+		ICON_OVAL,
+		ICON_RPOL,
+		ICON_IRPOL,
+		ICON_LINE,
 		//TODO: Add more icons names here
+		ICON_FILL_CLR,
+		ICON_DRAW_CLR,
+		ICON_UNDO,
+		ICON_REDO,
 
 		ICON_EXIT,		//Exit icon
 
@@ -42,14 +59,31 @@ class GUI
 
 	};
 
+	enum DrawMenuOperation {
+
+		ITM_LOAD,
+		ITM_SAVE,
+		ITM_COPY,
+		ITM_PASTE,
+		ITM_DELETE,
+		ITM_ROTATE,
+		ITM_MOVE,
+		ITM_SEND_TO_BACK,
+		ITM_BRING_TO_FRONT,
+		ITM_RESIZE,
 
 
+		DRAW_OPERATION_COUNT, //no. of operation items
 
+	};
+
+	GUI_MODE InterfaceMode;
 	int	width, height,	//Window width and height
 		wx, wy,			//Window starting coordinates
 		StatusBarHeight,	//Status Bar Height
 		ToolBarHeight,		//Tool Bar Height (distance from top of window to bottom line of toolbar)
-		MenuIconWidth;		//Width of each icon in toolbar menu
+		MenuIconWidth,		//Width of each icon in toolbar menu
+	    MenuOperationWidth;
 
 
 	color DrawColor;		//Drawing color
@@ -74,10 +108,14 @@ public:
 	void GetPointClicked(int& x, int& y) const;//Get coordinate where user clicks
 	string GetSrting() const;	 //Returns a string entered by the user
 	operationType GetUseroperation() const; //Read the user click and map to an operation
+	operationType GetUseroperation(Point& P) const;	
+
 
 	// Output Functions  ---------------------------
 	window* CreateWind(int, int, int, int) const; //creates the application window
 	void CreateDrawToolBar();	//creates Draw mode toolbar & menu
+	void CreateDrawOperationToolBar() ; 
+	void deleteDrawOperationToolBar() const; 
 	void CreateStatusBar() const;	//create the status bar
 
 	void ClearStatusBar() const;	//Clears the status bar
@@ -85,6 +123,8 @@ public:
 
 	// -- shapes Drawing functions
 	void DrawRect(Point P1, Point P2, GfxInfo RectGfxInfo) const;  //Draw a rectangle
+	void DrawTRI(Point P1, Point P2, Point P3, GfxInfo TRIGfxInfo) const;
+	void DrawLINE(Point P1, Point P2, GfxInfo LINEGfxInfo) const;
 
 	///Make similar functions for drawing all other shapes.
 
