@@ -36,9 +36,29 @@ shape* Graph::Getshape(int x, int y) const
 {
 	//If a shape is found return a pointer to it.
 	//if this point (x,y) does not belong to any shape return NULL
-
+    for (int i = 0; i < shapeCount; ++i) {
+	if (shapesList[i]->isPointInside(x, y)) {
+		return shapesList[i];
+	}
+        }
 
 	///Add your code here to search for a shape given a point x,y	
 
 	return nullptr;
+}
+void Graph::unselectAllShapes() {
+	for (int i = 0; i < shapeCount; i++) {
+		shapesList[i]->setSelected(false);
+	}
+}
+
+void Graph::selectShape(int x, int y) {
+	for (int i = 0; i < shapeCount; i++) {
+		if (shapesList[i]->isPointInside(x, y)) {
+			unselectAllShapes();
+			shapesList[i]->setSelected(true);
+			return;
+		}
+	}
+	unselectAllShapes();
 }
