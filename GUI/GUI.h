@@ -4,7 +4,9 @@
 
 #include "..\CMUgraphicsLib\CMUgraphics.h"
 #include "..\Defs.h"
-
+#include <iostream>
+#include <Windows.h>
+#include <commdlg.h>
 #include <string>
 using namespace std;
 
@@ -117,7 +119,8 @@ public:
 	void CreateDrawOperationToolBar() ; 
 	void deleteDrawOperationToolBar() const; 
 	void CreateStatusBar() const;	//create the status bar
-
+        color GetColor() const;
+        void SetCrntDrawColor(color x);
 	void ClearStatusBar() const;	//Clears the status bar
 	void ClearDrawArea() const;	//Clears the drawing area
 
@@ -125,6 +128,8 @@ public:
 	void DrawRect(Point P1, Point P2, GfxInfo RectGfxInfo) const;  //Draw a rectangle
 	void DrawTRI(Point P1, Point P2, Point P3, GfxInfo TRIGfxInfo) const;
 	void DrawLINE(Point P1, Point P2, GfxInfo LINEGfxInfo) const;
+        void DrawSquare(Point P1, Point P2, GfxInfo GfxInfo) const;
+        void DrawCircle(Point P1, Point P2, GfxInfo GfxInfo) const;
 
 	///Make similar functions for drawing all other shapes.
 
@@ -133,6 +138,12 @@ public:
 	color getCrntDrawColor() const;	//get current drwawing color
 	color getCrntFillColor() const;	//get current filling color
 	int getCrntPenWidth() const;		//get current pen width
+        void changeFillColor(color); //Change Current Filling Color
+        void changeDrawColor(color); //Change Current Drawing Color
+        COLORREF currentColor;
+
+
+        COLORREF GetCurrentDColor() const { return currentColor; }
 
 
 	~GUI();
