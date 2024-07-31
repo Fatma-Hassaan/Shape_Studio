@@ -9,7 +9,8 @@ class shape
 protected:
 	int ID;		//Each shape has an ID
 	GfxInfo ShpGfxInfo;	//shape graphis info
-	
+	COLORREF borderColor;
+        bool selected;
 	/// Add more parameters if needed.
 
 public:
@@ -19,10 +20,10 @@ public:
 	bool IsSelected() const;	//check whether fig is selected
 
 	virtual void Draw(GUI* pUI) const  = 0 ;		//Draw the shape
-	
+	virtual bool isPointInside(int x, int y) const = 0; 
 	void ChngDrawClr(color Dclr);	//changes the shape's drawing color
 	void ChngFillClr(color Fclr);	//changes the shape's filling color
-
+        shape() : borderColor(RGB(0, 0, 0)), selected(false) {}
 	///The following functions should be supported by the shape class
 	///It should be overridden by each inherited shape
 
