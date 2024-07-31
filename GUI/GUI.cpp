@@ -105,6 +105,8 @@ operationType GUI::GetUseroperation() const
 			case ICON_OVAL:      return DRAW_OVAL;
 			case ICON_RPOL:      return DRAW_RPOL;
 			case ICON_IRPOL:     return DRAW_IRPOL;
+			case ICON_DRAW_CLR: return CHNG_DRAW_CLR;
+	                 case ICON_EXIT: return EXIT;
 
 			default: return EMPTY;
 			}
@@ -206,6 +208,7 @@ void GUI::CreateDrawToolBar()
 	MenuIconImages[ICON_RPOL] = "images\\MenuIcons\\Menu_Rpol.jpg";
 	MenuIconImages[ICON_IRPOL] = "images\\MenuIcons\\Menu_IRpol.jpg";
 	MenuIconImages[ICON_LINE] = "images\\MenuIcons\\Menu_Line.jpg";
+	MenuIconImages[ICON_DRAW_CLR] = "images\\MenuIcons\\color.jpg";
 	MenuIconImages[ICON_EXIT] = "images\\MenuIcons\\Menu_Exit.jpg";
 
 	//TODO: Prepare images for each menu icon and add it to the list
@@ -222,6 +225,23 @@ void GUI::CreateDrawToolBar()
 	pWind->DrawLine(0, ToolBarHeight, width, ToolBarHeight);
 
 }
+void GUI::ClearDrawArea() const
+{
+	pWind->SetPen(BkGrndColor, 1);
+	pWind->SetBrush(BkGrndColor);
+	pWind->DrawRectangle(0, ToolBarHeight, width, height - StatusBarHeight);
+
+}
+//////////////////////////////////////////////////////////////////////////////////////////
+void GUI::PrintMessage(string msg) const	//Prints a message on status bar
+{
+	ClearStatusBar();	//First clear the status bar
+
+	pWind->SetPen(MsgColor, 50);
+	pWind->SetFont(24, BOLD, BY_NAME, "Arial");
+	pWind->DrawString(10, height - (int)(0.75 * StatusBarHeight), msg);
+}
+
 //////////////////////////////////////////////////////////////////////////////////////////
 
 void GUI::CreateDrawOperationToolBar()
@@ -362,7 +382,76 @@ void GUI::DrawLINE(Point P1, Point P2, GfxInfo LINEGfxInfo) const
 	pWind->DrawLine(P1.x, P1.y, P2.x, P2.y, style);
 
 }
+void GUI::DrawSquare(Point P1, Point P2, GfxInfo GfxInfo) const
+{
+	long x1, y1, sideL;
+	x1 = (P2.x - P1.x) * (P2.x - P1.x);
+	y1 = (P2.y - P1.y) * (P2.y - P1.y);
+	sideL = sqrt(x1 + y1);
+	Point P2S;
+	P2S = { (P1.x + sideL),(P1.y + sideL) };
+	color DrawingClr;
+	if (GfxInfo.isSelected)	//shape is selected
+		DrawingClr = HighlightColor; //shape should be drawn highlighted
+	else
+		DrawingClr = GfxInfo.DrawClr;
 
+	pWind->SetPen(DrawingClr, GfxInfo.BorderWdth);	//Set Drawing color & width
+
+	drawstyle style;
+	if (GfxInfo.isFilled)
+	{
+		style = FILLED;
+		pWind->SetBrush(GfxInfo.FillClr);
+	}
+	else
+		style = FRAME;
+
+	pWind->DrawRectangle(P1.x, P1.y, P2S.x, P2S.y, style);
+
+}
+void GUI::DrawCircle(Point P1, Point P2, GfxInfo GfxInfo) const
+{
+	long x1, y1, RAD;
+	x1 = (P2.x - P1.x) * (P2.x - P1.x);
+	y1 = (P2.y - P1.y) * (P2.y - P1.y);
+	RAD = sqrt(x1 + y1);
+
+	color DrawingClr;
+	if (GfxInfo.isSelected)	//shape is selected
+		DrawingClr = HighlightColor; //shape should be drawn highlighted
+	else
+		DrawingClr = GfxInfo.DrawClr;
+
+	pWind->SetPen(DrawingClr, GfxInfo.BorderWdth);	//Set Drawing color & width
+
+	drawstyle style;
+	if (GfxInfo.isFilled)
+	{
+		style = FILLED;
+		pWind->SetBrush(GfxInfo.FillClr);
+	}
+	else
+		style = FRAME;
+
+	pWind->DrawCircle(P1.x, P1.y, RAD, style);
+}
+color GUI::GetCurrentDColor() const {
+	window* x = CreateWind(400, 400, width / 4, height / 4);
+	string image = "images//MenuIcons//color.jpg";
+	x->DrawImage(image, 0, 0, 400, 400);
+
+	Point temp;
+	x->WaitMouseClick(temp.x, temp.y);
+	color y = x->GetColor(temp.x, temp.y);
+	delete x;
+	return y;
+
+}
+void GUI::SetCrntDrawColor(color x) {
+
+	DrawColor = x;
+}
 
 //////////////////////////////////////////////////////////////////////////////////////////
 GUI::~GUI()
