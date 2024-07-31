@@ -11,5 +11,7 @@ public:
 	Rect(Point , Point, GfxInfo shapeGfxInfo );
 	virtual ~Rect();
 	virtual void Draw(GUI* pUI) const;
+        virtual bool isPointInside(int x, int y) const override;
+        virtual void setSelected(bool selected) override;
 };
 
