@@ -3,8 +3,6 @@
 #include "..\GUI\GUI.h"
 
 class controller; //forward class declaration
-
-
 //Base class for all possible operations
 class operation
 {
@@ -27,3 +25,58 @@ public:
 
 };
 
+/////////////////////////////////	SHAPES OPERATIONS	/////////////////////////////////
+class opAddRect : public operation
+{
+public:
+	opAddRect(controller* pCont);
+	virtual ~opAddRect();
+
+	//Add rectangle to the controller
+	virtual void Execute();
+
+};
+
+class opAddSquare : public operation
+{
+public:
+	opAddSquare(controller* pCont);
+	virtual ~opAddSquare();
+
+	//Add Square to the controller
+	virtual void Execute();
+
+};
+
+class opAddTriangle : public operation
+{
+public:
+	opAddTriangle(controller* pCont);
+	virtual ~opAddTriangle();
+
+	//Add Triangle to the controller
+	virtual void Execute();
+
+};
+
+class opAddCircle : public operation
+{
+public:
+	opAddCircle(controller* pCont);
+	virtual ~opAddCircle();
+
+	//Add Circle to the controller
+	virtual void Execute();
+
+};
+
+class opAddLine : public operation
+{
+public:
+	opAddLine(controller* pCont);
+	virtual ~opAddLine();
+
+	//Add Line to the controller
+	virtual void Execute();
+
+};
