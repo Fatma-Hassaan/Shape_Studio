@@ -20,3 +20,13 @@ void shape::ChngFillClr(color Fclr)
 	ShpGfxInfo.FillClr = Fclr; 
 }
 
+void shape::setType(ShapeType T)
+{
+	shpType = T;
+}
+
+ShapeType shape::getType() const
+{
+	return shpType;
+}
+
