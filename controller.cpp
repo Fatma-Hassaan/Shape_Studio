@@ -29,11 +29,33 @@ operation* controller::createOperation(operationType OpType)
 		case DRAW_RECT:
 			pOp = new opAddRect(this);
 			break;
+		case DRAW_TRI:
+	               pOp = new opAddTri(this);
+	               break;
 
 		case DRAW_LINE:
 			///create AddLineoperation here
-
+			pOp = new opAddLine(this);
 			break;
+		case UNDO:
+	               pOp = new UndoRedo(this, UndoRedo::MODE_UNDO);
+	               break;
+
+                case REDO:
+	               pOp = new UndoRedo(this, UndoRedo::MODE_REDO);
+	               break;
+
+                case SEND_TO_BACK:
+	               pOp = new SendToBack(this);
+	               break;
+
+                case SAVE:
+	              pOp = new Save(this);
+	              break;
+
+                case LOAD:
+	             pOp = new Load(this);
+	             break;
 
 		case EXIT:
 			///create Exitoperation here
@@ -65,6 +87,22 @@ GUI *controller::GetUI() const
 Graph* controller::getGraph() const
 {
 	return pGraph;
+}
+
+void controller::setSelectedShape(shape* sp)
+{
+	selectedShape = sp;
+}
+
+shape* controller::getSelectedShape() const
+{
+	return selectedShape;
+}
+
+void controller::exit()
+{
+	delete pGUI; delete pGraph;
+	pGUI = nullptr; pGraph = nullptr;
 }
 
 
