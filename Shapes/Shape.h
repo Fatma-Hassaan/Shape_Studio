@@ -8,6 +8,7 @@ class shape
 {
 protected:
 	int ID;		//Each shape has an ID
+        ShapeType shpType;
 	GfxInfo ShpGfxInfo;	//shape graphis info
 	COLORREF borderColor;
         bool selected;
@@ -18,6 +19,8 @@ public:
 	virtual ~shape() {}
 	void SetSelected(bool s);	//select/unselect the shape
 	bool IsSelected() const;	//check whether fig is selected
+	void setType(ShapeType);
+	ShapeType getType() const;
 
 	virtual void Draw(GUI* pUI) const  = 0 ;		//Draw the shape
 	virtual bool isPointInside(int x, int y) const = 0; 
