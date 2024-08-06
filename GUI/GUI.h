@@ -141,6 +141,9 @@ public:
         void changeFillColor(color); //Change Current Filling Color
         void changeDrawColor(color); //Change Current Drawing Color
         COLORREF currentColor;
+        void DrawUndoRedoIcons(UndoRedo::MODES, bool) const;
+        void drawOnToolbar(string, int) const;
+        void drawOnoperationbar(string, int) const;
 
 
         COLORREF GetCurrentDColor() const { return currentColor; }
