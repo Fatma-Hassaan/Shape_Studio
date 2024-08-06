@@ -13,6 +13,7 @@ public:
 
 	operation(controller *pCont) { pControl = pCont; }	//constructor
 	virtual ~operation(){}
+        virtual void readActionParameters() = 0;
 
 	//Execute operation (code depends on operation type)
 	virtual void Execute() =0;
