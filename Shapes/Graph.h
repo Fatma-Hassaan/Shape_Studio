@@ -23,6 +23,10 @@ public:
 	shape* Getshape(int x, int y) const; //Search for a shape given a point inside the shape
         void unselectAllShapes();
         void selectShape(int x, int y);
+        void sendToBack(Shape*);
+        void Writeshapes(ofstream&);
+        void writeshapes(ofstream&, ShapeType);
+        bool empty();
 	void Save(ofstream& outfile);	//Save all shapes to a file
 	void load(ifstream& inputfile);	//Load all shapes from a file
 };
