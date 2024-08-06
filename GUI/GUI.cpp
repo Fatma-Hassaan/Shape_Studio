@@ -454,6 +454,33 @@ void GUI::SetCrntDrawColor(color x) {
 	DrawColor = x;
 }
 
+ void GUI::DrawUndoRedoIcons(UndoRedo::MODES mode , bool isAvailable) const
+{
+	if( mode == UndoRedo::MODE_UNDO)
+		if(isAvailable)
+			pWind->DrawImage("images\\MenuItems\\Menu_Undo.jpg", width - 5 * MenuIconWidth, 0, MenuIconWidth, ToolBarHeight - 3);
+		else
+			pWind->DrawImage("images\\MenuItems\\Menu_Undo_no.jpg", width - 5 * MenuIconWidth, 0, MenuIconWidth, ToolBarHeight - 3);
+	else
+		if (isAvailable)
+			pWind->DrawImage("images\\MenuItems\\Menu_Redo.jpg", width - 4 * MenuIconWidth, 0, MenuIconWidth, ToolBarHeight - 3);
+		else
+			pWind->DrawImage("images\\MenuItems\\Menu_Redo_no.jpg", width - 4 * MenuIconWidth, 0, MenuIconWidth, ToolBarHeight - 3);
+}
+
+
+ void GUI::drawOnToolbar(string path, int place) const
+ {
+	 pWind->DrawImage(path, place * MenuIconWidth, 0, MenuIconWidth, ToolBarHeight - 3);
+ }
+
+ void GUI::drawOnoperationbar(string path, int place) const
+ {
+	 pWind->DrawImage(path, 0, (place + 1) * MenuIconWidth, MenuIconWidth - 3, ToolBarHeight);
+ }
+
+
+
 //////////////////////////////////////////////////////////////////////////////////////////
 GUI::~GUI()
 {
