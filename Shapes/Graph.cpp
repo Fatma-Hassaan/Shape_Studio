@@ -62,3 +62,57 @@ void Graph::selectShape(int x, int y) {
 	}
 	unselectAllShapes();
 }
+
+void Graph::Writeshapes(ofstream& OutFile)
+{
+	OutFile << colorData(DrawColor) << " " << colorData(FillColor) << endl;
+	OutFile << shapeCount;	
+	for (int i = 0; i < shapeCount; i++)
+		shapesList[i]->save(OutFile);	//Calling the Save function for each figure
+}
+
+void Graph::writeshapes(ofstream& OutFile, ShapeType SavedType)
+{
+	int TypeCount = 0;
+	for (int i = 0; i < shapeCount; i++)
+		if (shapesList[i]->getType() == SavedType)
+			TypeCount++;
+
+	OutFile << colorData(DrawColor) << " " << colorData(FillColor) << endl;		
+	OutFile << TypeCount;	//Writing the number of figures of SavedType
+	for (int i = 0; i < shapeCount; i++)
+		if (shapesList[i]->getType() == SavedType)
+			shapesList[i]->save(OutFile);	
+}
+
+bool Graph::empty()
+{
+	for (int i = 0; i < shapeCount; i++)
+		if (shapesList[i])
+			return false;
+	return true;
+}
+
+void Graph::sendToBack(Shape* shape)
+{
+	int currentIndex;
+	shape* currentshape;
+
+	for (int i = 0; i < shapeCount; i++)
+	{
+
+		if (shapesList[i] == shape)
+		{
+			currentIndex = i;
+			currentshape = shapesList[i];
+			break;
+		}
+	}
+
+	for (int i = currentIndex; i > 0; i--)
+	{
+		shapesList[i] = shapesList[i - 1];
+	}
+
+	shapesList[0] = currentshape;
+}
