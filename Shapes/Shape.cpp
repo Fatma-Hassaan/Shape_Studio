@@ -2,9 +2,14 @@
 
 shape::shape(GfxInfo shapeGfxInfo)
 { 
-	ShpGfxInfo = shapeGfxInfo;	//Default status is non-filled.
+	ShpGfxInfo = shapeGfxInfo;
+	 ShpImage = nullptr; //Default status is non-filled.
 }
- 
+shape::~shape()
+{
+    if (ShpImage)
+        delete ShpImage; // Free the image memory if it exists
+}
 void shape::SetSelected(bool s)
 {	ShpGfxInfo.isSelected = s; }
 
@@ -24,7 +29,12 @@ void shape::setType(ShapeType T)
 {
 	shpType = T;
 }
-
+void shape::SetImage(image* img)
+{
+    if (ShpImage)
+        delete ShpImage; // Free the previous image memory if it exists
+    ShpImage = img;
+}
 ShapeType shape::getType() const
 {
 	return shpType;
