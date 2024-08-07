@@ -5,13 +5,10 @@ Graph::Graph()
 {
 	shapeCount = 0;
 	selectedShape = nullptr;
+	clipboardShape = nullptr;
 }
 
-Graph::~Graph()
-{
-	 for (int i = 0; i < shapeCount; ++i)
-        delete shapesList[i];
-}
+
 
 //==================================================================================//
 //						shapes Management Functions								//
@@ -122,4 +119,41 @@ void Graph::sendToBack(Shape* shape)
 	}
 
 	shapesList[0] = currentshape;
+}
+void Graph::SetClipboard(shape* pShp)
+{
+    if (clipboardShape != nullptr)
+    {
+        delete clipboardShape;
+    }
+    clipboardShape = pShp;
+}
+
+// Get clipboard shape
+shape* Graph::GetClipboard() const
+{
+    return clipboardShape;
+}
+
+// Remove shape from the list
+void Graph::RemoveShape(shape* pShp)
+{
+    for (int i = 0; i < shapeCount; ++i)
+    {
+        if (shapesList[i] == pShp)
+        {
+            delete shapesList[i];
+            for (int j = i; j < shapeCount - 1; ++j)
+            {
+                shapesList[j] = shapesList[j + 1];
+            }
+            shapeCount--;
+            return;
+        }
+    }
+}
+Graph::~Graph()
+{
+	 for (int i = 0; i < shapeCount; ++i)
+        delete shapesList[i];
 }
