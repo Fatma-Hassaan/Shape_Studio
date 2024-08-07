@@ -28,6 +28,8 @@ public:
 	void ChngDrawClr(color Dclr);	//changes the shape's drawing color
 	void ChngFillClr(color Fclr);	//changes the shape's filling color
         shape() : borderColor(RGB(0, 0, 0)), selected(false) {}
+        virtual shape* Clone() const = 0; // Clone method
+        virtual void Move(int x, int y) = 0; // Move method
 	///The following functions should be supported by the shape class
 	///It should be overridden by each inherited shape
 
