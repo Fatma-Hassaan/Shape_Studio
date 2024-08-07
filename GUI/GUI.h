@@ -54,9 +54,12 @@ class GUI
 		ICON_DRAW_CLR,
 		ICON_UNDO,
 		ICON_REDO,
-
+                ICON_COPY,	    //Copy  icon in menu
+		//ICON_CUT,	    //Cut  icon in menu
+		ICON_PASTE,	    //Paste  icon in menu
+                ICON_DELETE,
 		ICON_EXIT,		//Exit icon
-
+                ICON_STICK_IMAGE,
 		DRAW_ICON_COUNT		//no. of menu icons ==> This should be the last line in this enum
 
 	};
@@ -110,7 +113,7 @@ public:
 	void GetPointClicked(int& x, int& y) const;//Get coordinate where user clicks
 	string GetSrting() const;	 //Returns a string entered by the user
 	operationType GetUseroperation() const; //Read the user click and map to an operation
-	operationType GetUseroperation(Point& P) const;	
+	
 
 
 	// Output Functions  ---------------------------
@@ -148,9 +151,7 @@ public:
         
         void DrawImage(Point P1, Point P2, image* img) const; // Method to draw the image
         image* LoadImage(const string& filename) const; // Method to load an image
-        COLORREF GetCurrentDColor() const { return currentColor; }
-
-
+        
 	~GUI();
 };
 
