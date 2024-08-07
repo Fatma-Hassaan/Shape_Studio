@@ -145,7 +145,9 @@ public:
         void drawOnToolbar(string, int) const;
         void drawOnoperationbar(string, int) const;
 
-
+        
+        void DrawImage(Point P1, Point P2, image* img) const; // Method to draw the image
+        image* LoadImage(const string& filename) const; // Method to load an image
         COLORREF GetCurrentDColor() const { return currentColor; }
 
 
