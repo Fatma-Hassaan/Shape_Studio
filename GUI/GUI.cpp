@@ -479,7 +479,16 @@ void GUI::SetCrntDrawColor(color x) {
 	 pWind->DrawImage(path, 0, (place + 1) * MenuIconWidth, MenuIconWidth - 3, ToolBarHeight);
  }
 
+void GUI::DrawImage(Point P1, Point P2, image* img) const
+{
+    if (img)
+        pWind->DrawImage(img, P1.x, P1.y, P2.x - P1.x, P2.y - P1.y);
+}
 
+image* GUI::LoadImage(const string& filename) const
+{
+    return new image(filename); // Assuming the library supports loading images like this
+}
 
 //////////////////////////////////////////////////////////////////////////////////////////
 GUI::~GUI()
