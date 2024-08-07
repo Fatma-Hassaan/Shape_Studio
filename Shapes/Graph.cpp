@@ -1,11 +1,13 @@
 #include "Graph.h"
 #include "../GUI/GUI.h"
+#include"../controller.h"
+#include "..\operations\operation.h"
 
 Graph::Graph()
 {
 	shapeCount = 0;
 	selectedShape = nullptr;
-	clipboardShape = nullptr;
+	copShape = nullptr;
 }
 
 
