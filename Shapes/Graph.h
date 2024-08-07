@@ -27,6 +27,8 @@ public:
         void Writeshapes(ofstream&);
         void writeshapes(ofstream&, ShapeType);
         bool empty();
+        shape* GetClipboard() const;
+        void RemoveShape(shape* pShp);
 	void Save(ofstream& outfile);	//Save all shapes to a file
 	void load(ifstream& inputfile);	//Load all shapes from a file
 };
