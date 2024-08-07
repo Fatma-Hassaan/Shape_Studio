@@ -73,45 +73,51 @@ operationType GUI::GetUseroperation() const
 	int x, y;
 	pWind->WaitMouseClick(x, y);	//Get the coordinates of the user click
 
-	if (InterfaceMode == MODE_DRAW)
+	if (InterfaceMode == MODE_DRAW)	//GUI in the DRAW mode
 	{
 		//[1] If user clicks on the Toolbar
 		if (y >= 0 && y < ToolBarHeight)
 		{
-			if (x > width - 5 * MenuOperationWidth && x < width - 4 * MenuOperationWidth)
-				return UNDO;
-			if (x > width - 4 * MenuOperationWidth && x < width - 3 * MenuOperationWidth)
-				return REDO;
 			//Check whick Menu icon was clicked
 			//==> This assumes that menu icons are lined up horizontally <==
-
 			int ClickedIconOrder = (x / MenuIconWidth);
 			//Divide x coord of the point clicked by the menu icon width (int division)
 			//if division result is 0 ==> first icon is clicked, if 1 ==> 2nd icon and so on
 
-			if (x < (ICON_FILL_CLR)*MenuIconWidth + 50 && x >(ICON_FILL_CLR) * MenuIconWidth)
-				return CHNG_FILL_CLR;
-			if (x < (ICON_DRAW_CLR)*MenuIconWidth && x >(ICON_DRAW_CLR) * MenuIconWidth - 50)
-				return CHNG_DRAW_CLR;
-
-
 			switch (ClickedIconOrder)
 			{
-			case ICON_GAME:      return TO_PLAY;
-			case ICON_RECT:      return DRAW_RECT;
-			case ICON_TRI:       return DRAW_TRI;
-			case ICON_CIR:       return DRAW_CIRC;
-			case ICON_LINE:	     return DRAW_LINE;
-			case ICON_SQE:       return DRAW_SQE;
-			case ICON_OVAL:      return DRAW_OVAL;
-			case ICON_RPOL:      return DRAW_RPOL;
-			case ICON_IRPOL:     return DRAW_IRPOL;
-			case ICON_DRAW_CLR: return CHNG_DRAW_CLR;
-	                 case ICON_EXIT: return EXIT;
+			case ICON_RECT: return DRAW_RECT;
+			case ICON_CIRC: return DRAW_CIRC;
+			case ICON_SQU: return DRAW_SQU;
+			case ICON_LINE: return DRAW_LINE;
+			case ICON_TRI: return DRAW_TRI;
+				//case ICON_OVAL: return DRAW_OVAL;
+			case ICON_REGPOL: return DRAW_REGPOL;
+			case ICON_IRREGPOL: return DRAW_IRREGPOL;
+			case ICON_EXIT: return EXIT;
+			case ICON_SAVE: return SAVE;
+			case ICON_LOAD: return LOAD;
+			case ICON_COLORPAL: return CHNG_DRAW_CLR;
+			case ICON_FILL: return CHNG_FILL_CLR;
+			case ICON_PLAYMODE: return TO_PLAY;
+			case ICON_SELECT: return SELECT;
+			case ICON_DELETE: return DEL;
+			case ICON_HIDE: return HIDE;
+			case ICON_UNDO: return UNDO;
+			case ICON_REDO: return REDO;
+			case ICON_COPY: return COPY;
+				//case ICON_CUT: return CUT;
+			case ICON_PASTE: return PASTE;
+			case ICON_ROTATE: return ROTATE; 
+			case ICON_RESIZE: return RESIZE;  
+			case ICON_MOVE: return MOVE;
 
-			default: return EMPTY;
+
+
+
+
+			default: return EMPTY;	//A click on empty place in desgin toolbar
 			}
-
 		}
 		else if (x >= 0 && x < MenuOperationWidth)
 		{
@@ -129,6 +135,7 @@ operationType GUI::GetUseroperation() const
 			case ITM_RESIZE:             return RESIZE;
 			case ITM_ROTATE:             return ROTATE;
 			case ITM_MOVE:               return MOVE;
+		        case ITM_STICK_IMAGE:        return STICK_IMAGE;
 
 
 			default: return EMPTY;
@@ -175,6 +182,17 @@ window* GUI::CreateWind(int w, int h, int x, int y) const
 	pW->DrawRectangle(0, ToolBarHeight, w, h);
 	return pW;
 }
+void GUI::ClearWind() const
+{
+	//Clear window by drawing a filled white rectangle
+	pWind->SetPen(WHITE, 0);
+	pWind->SetBrush(WHITE);
+	pWind->DrawRectangle(0, 0, width, height);
+}
+window* GUI::getwind() {
+	return pWind;
+}
+
 //////////////////////////////////////////////////////////////////////////////////////////
 void GUI::CreateStatusBar() const
 {
@@ -210,7 +228,9 @@ void GUI::CreateDrawToolBar()
 	MenuIconImages[ICON_IRPOL] = "images\\MenuIcons\\Menu_IRpol.jpg";
 	MenuIconImages[ICON_LINE] = "images\\MenuIcons\\Menu_Line.jpg";
 	MenuIconImages[ICON_DRAW_CLR] = "images\\MenuIcons\\color.jpg";
+	MenuIconImages[ICON_STICK_IMAGE] = "images\\MenuIcons\\Menu_STICK_IMAGE.jpg";
 	MenuIconImages[ICON_EXIT] = "images\\MenuIcons\\Menu_Exit.jpg";
+	
 
 	//TODO: Prepare images for each menu icon and add it to the list
 
@@ -226,22 +246,22 @@ void GUI::CreateDrawToolBar()
 	pWind->DrawLine(0, ToolBarHeight, width, ToolBarHeight);
 
 }
-void GUI::ClearDrawArea() const
+/*void GUI::ClearDrawArea() const
 {
 	pWind->SetPen(BkGrndColor, 1);
 	pWind->SetBrush(BkGrndColor);
 	pWind->DrawRectangle(0, ToolBarHeight, width, height - StatusBarHeight);
 
-}
+}*/
 //////////////////////////////////////////////////////////////////////////////////////////
-void GUI::PrintMessage(string msg) const	//Prints a message on status bar
+/*void GUI::PrintMessage(string msg) const	//Prints a message on status bar
 {
 	ClearStatusBar();	//First clear the status bar
 
 	pWind->SetPen(MsgColor, 50);
 	pWind->SetFont(24, BOLD, BY_NAME, "Arial");
 	pWind->DrawString(10, height - (int)(0.75 * StatusBarHeight), msg);
-}
+}*/
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
@@ -259,7 +279,7 @@ void GUI::CreateDrawOperationToolBar()
 	MenuOperationImages[ITM_SEND_TO_BACK] = "images\\MenuItems\\Menu_send_to_back.jpg";
 	MenuOperationImages[ITM_BRING_TO_FRONT] = "images\\MenuItems\\Menu_bring_to_front.jpg";
 	MenuOperationImages[ITM_RESIZE] = "images\\MenuItems\\Menu_Resize.jpg";
-
+        MenuIconImages[ICON_STICK_IMAGE] = "images\\MenuItems\\Menu_STICK_IMAGE.jpg";
 
 	for (int i = 0; i < DRAW_OPERATION_COUNT; i++)
 		pWind->DrawImage(MenuOperationImages[i], 0, (i + 1) * ToolBarHeight, MenuOperationWidth - 3, ToolBarHeight);
@@ -269,13 +289,11 @@ void GUI::CreateDrawOperationToolBar()
 	pWind->DrawLine(MenuOperationWidth - 1.5, ToolBarHeight, MenuOperationWidth - 1.5, height - StatusBarHeight);
 }
 
-void GUI::deleteDrawOperationToolBar() const
+/*void GUI::StickImage(string photo, int x, int y, int width, int hight) const
 {
-	pWind->SetPen(BkGrndColor, 1);
-	pWind->SetBrush(BkGrndColor);
-	pWind->DrawRectangle(0, ToolBarHeight, MenuOperationWidth, height - StatusBarHeight);
-}
+	pWind->DrawImage(photo, x, y, width, hight);
 
+}*/
 void GUI::ClearDrawArea() const
 {
 	pWind->SetPen(BkGrndColor, 1);
@@ -454,7 +472,7 @@ void GUI::SetCrntDrawColor(color x) {
 	DrawColor = x;
 }
 
- void GUI::DrawUndoRedoIcons(UndoRedo::MODES mode , bool isAvailable) const
+/* void GUI::DrawUndoRedoIcons(UndoRedo::MODES mode , bool isAvailable) const
 {
 	if( mode == UndoRedo::MODE_UNDO)
 		if(isAvailable)
@@ -478,17 +496,17 @@ void GUI::SetCrntDrawColor(color x) {
  {
 	 pWind->DrawImage(path, 0, (place + 1) * MenuIconWidth, MenuIconWidth - 3, ToolBarHeight);
  }
-
+*/
 void GUI::DrawImage(Point P1, Point P2, image* img) const
 {
     if (img)
         pWind->DrawImage(img, P1.x, P1.y, P2.x - P1.x, P2.y - P1.y);
 }
 
-image* GUI::LoadImage(const string& filename) const
+/*image* GUI::LoadImage(const string& filename) const
 {
     return new image(filename); // Assuming the library supports loading images like this
-}
+}*/
 
 //////////////////////////////////////////////////////////////////////////////////////////
 GUI::~GUI()
