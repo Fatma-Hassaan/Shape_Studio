@@ -9,6 +9,8 @@ Graph::Graph()
 
 Graph::~Graph()
 {
+	 for (int i = 0; i < shapeCount; ++i)
+        delete shapesList[i];
 }
 
 //==================================================================================//
@@ -27,8 +29,13 @@ void Graph::Addshape(shape* pShp)
 void Graph::Draw(GUI* pUI) const
 {
 	pUI->ClearDrawArea();
-	for (int i=0;i<shapeCount; i++)
-		shapesList[i]->Draw(pUI);
+	for (int i = 0; i < shapeCount; ++i)
+    {
+        if (shapesList[i]->ShpImage)
+            pUI->DrawImage(shapesList[i]->P1, shapesList[i]->P2, shapesList[i]->ShpImage);
+        else
+            shapesList[i]->Draw(pUI);
+    }
 }
 
 
