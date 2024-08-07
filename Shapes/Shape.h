@@ -12,6 +12,7 @@ protected:
 	GfxInfo ShpGfxInfo;	//shape graphis info
 	COLORREF borderColor;
         bool selected;
+        image* ShpImage;
 	/// Add more parameters if needed.
 
 public:
@@ -21,7 +22,7 @@ public:
 	bool IsSelected() const;	//check whether fig is selected
 	void setType(ShapeType);
 	ShapeType getType() const;
-
+        void SetImage(image* img);
 	virtual void Draw(GUI* pUI) const  = 0 ;		//Draw the shape
 	virtual bool isPointInside(int x, int y) const = 0; 
 	void ChngDrawClr(color Dclr);	//changes the shape's drawing color
