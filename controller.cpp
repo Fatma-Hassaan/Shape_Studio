@@ -59,6 +59,15 @@ operation* controller::createOperation(operationType OpType)
 		case ADD_IMAGE:
                 pOp = new opAddImage(this);
                  break;
+		case COPY_SHAPE:
+            pOp = new opCopyShape(this);
+            break;
+                case PASTE_SHAPE:
+            pOp = new opPasteShape(this);
+            break;
+                 case DELETE_SHAPE:
+            pOp = new opDeleteShape(this);
+            break;
 
 		case EXIT:
 			///create Exitoperation here
