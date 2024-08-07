@@ -56,6 +56,9 @@ operation* controller::createOperation(operationType OpType)
                 case LOAD:
 	             pOp = new Load(this);
 	             break;
+		case ADD_IMAGE:
+                pOp = new opAddImage(this);
+                 break;
 
 		case EXIT:
 			///create Exitoperation here
