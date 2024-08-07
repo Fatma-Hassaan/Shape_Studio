@@ -155,5 +155,11 @@ void Graph::RemoveShape(shape* pShp)
 Graph::~Graph()
 {
 	 for (int i = 0; i < shapeCount; ++i)
+    {
         delete shapesList[i];
+    }
+    if (clipboardShape != nullptr)
+    {
+        delete clipboardShape;
+    }
 }
