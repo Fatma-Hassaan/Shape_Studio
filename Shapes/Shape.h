@@ -8,11 +8,7 @@ class shape
 {
 protected:
 	int ID;		//Each shape has an ID
-        ShapeType shpType;
-	GfxInfo ShpGfxInfo;	//shape graphis info
-	COLORREF borderColor;
-        bool selected;
-        image* ShpImage;
+        GfxInfo ShpGfxInfo;	//shape graphis info
 	/// Add more parameters if needed.
 
 public:
@@ -20,15 +16,14 @@ public:
 	virtual ~shape() {}
 	void SetSelected(bool s);	//select/unselect the shape
 	bool IsSelected() const;	//check whether fig is selected
-	void setType(ShapeType);
-	ShapeType getType() const;
-        void SetImage(image* img);
-	virtual void Draw(GUI* pUI) const  = 0 ;		//Draw the shape
+	/*void setType(ShapeType);
+	ShapeType getType() const;*/
+        virtual void Draw(GUI* pUI) const  = 0 ;		//Draw the shape
 	virtual bool isPointInside(int x, int y) const = 0; 
 	void ChngDrawClr(color Dclr);	//changes the shape's drawing color
 	void ChngFillClr(color Fclr);	//changes the shape's filling color
-        shape() : borderColor(RGB(0, 0, 0)), selected(false) {}
-        virtual shape* Clone() const = 0; // Clone method
+        //shape() : borderColor(RGB(0, 0, 0)), selected(false) {}
+        //virtual shape* Clone() const = 0; // Clone method
         virtual void Move(int x, int y) = 0; // Move method
 	///The following functions should be supported by the shape class
 	///It should be overridden by each inherited shape
