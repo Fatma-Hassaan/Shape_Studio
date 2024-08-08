@@ -3,7 +3,7 @@
 shape::shape(GfxInfo shapeGfxInfo)
 { 
 	ShpGfxInfo = shapeGfxInfo;
-	 ShpImage = nullptr; //Default status is non-filled.
+	
 }
 shape::~shape()
 {
@@ -25,18 +25,13 @@ void shape::ChngFillClr(color Fclr)
 	ShpGfxInfo.FillClr = Fclr; 
 }
 
-void shape::setType(ShapeType T)
+/*void shape::setType(ShapeType T)
 {
 	shpType = T;
 }
-void shape::SetImage(image* img)
-{
-    if (ShpImage)
-        delete ShpImage; // Free the previous image memory if it exists
-    ShpImage = img;
-}
-ShapeType shape::getType() const
+*/
+/*ShapeType shape::getType() const
 {
 	return shpType;
-}
+}*/
 
