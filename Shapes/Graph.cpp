@@ -52,7 +52,26 @@ shape* Graph::Getshape(int x, int y) const
 
 	return nullptr;
 }
-void Graph::unselectAllShapes() {
+shape* Graph::GetSelected()
+{
+	return selectedShape;
+}
+shape* Graph::getCopied() {
+	return copiedShape;
+}
+
+void Graph::setCopied(shape* copied) {
+	copiedShape = copied;
+}
+
+void Graph::setselected(shape* s)
+{
+	if (!selectedShape)
+		selectedShape = s;
+}
+
+
+/*void Graph::unselectAllShapes() {
 	for (int i = 0; i < shapeCount; i++) {
 		shapesList[i]->setSelected(false);
 	}
@@ -67,7 +86,7 @@ void Graph::selectShape(int x, int y) {
 		}
 	}
 	unselectAllShapes();
-}
+}*/
 
 void Graph::Writeshapes(ofstream& OutFile)
 {
@@ -122,7 +141,44 @@ void Graph::sendToBack(Shape* shape)
 
 	shapesList[0] = currentshape;
 }
-void Graph::SetClipboard(shape* pShp)
+shape** Graph::getshapesList() const
+{
+    shape** newshapelist = new shape*[shapesListSize];
+    for (size_t i = 0; i < shapesListSize; ++i)
+    {
+        newshapelist[i] = shapesList[i];
+    }
+    return newshapelist;
+}
+shape** Graph::selectedshapes(size& selectedCount) const
+{
+    // First, count the number of selected shapes
+    selectedCount = 0;
+    for (size i = 0; i < shapesListSize; ++i)
+    {
+        if (shapesList[i]->IsSelected())
+        {
+            ++selectedCount;
+        }
+    }
+
+    // Allocate memory for the selected shapes
+    shape** selectedshapes = new shape*[selectedCount];
+    size j = 0;
+
+    // Fill the array with the selected shapes
+    for (size i = 0; i < shapesListSize; ++i)
+    {
+        if (shapesList[i]->IsSelected())
+        {
+            selectedshapes[j++] = shapesList[i];
+        }
+    }
+
+    return selectedshapes;
+}
+
+/*void Graph::SetClipboard(shape* pShp)
 {
     if (clipboardShape != nullptr)
     {
@@ -153,15 +209,7 @@ void Graph::RemoveShape(shape* pShp)
             return;
         }
     }
-}
+}*/
 Graph::~Graph()
 {
-	 for (int i = 0; i < shapeCount; ++i)
-    {
-        delete shapesList[i];
-    }
-    if (clipboardShape != nullptr)
-    {
-        delete clipboardShape;
-    }
 }
