@@ -5,5 +5,6 @@ class opCopyShape : public operation
 {
 public:
     opCopyShape(controller* pCont);
+    ~opCopy();
     virtual void Execute();
 };
